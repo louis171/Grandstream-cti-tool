@@ -1,8 +1,8 @@
 {
   "name": "cti-tool-1",
-  "productName": "cti-tool-1",
+  "productName": "Grandstream CTI Tool",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "Grandstream CTI Tool",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
@@ -19,12 +19,17 @@
   "license": "MIT",
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "icon": "./src/icon.ico"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "cti_tool_1"
+            "name": "Grandstream-CTI-Tool",
+            "setupIcon": "./src/icon.ico",
+            "icon": "./src/icon.ico",
+            "loadingGif": "./src/loading.gif"
           }
         },
         {
