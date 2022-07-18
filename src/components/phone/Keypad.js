@@ -1,29 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import axios from "axios";
 import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-
-import { experimentalStyled as styled } from "@mui/material/styles";
-
-import LocalPhoneRoundedIcon from "@mui/icons-material/LocalPhoneRounded";
-import PhoneDisabledRoundedIcon from "@mui/icons-material/PhoneDisabledRounded";
-import BackspaceRoundedIcon from "@mui/icons-material/BackspaceRounded";
-
-import TextfieldCti from "../inputs/TextfieldCti";
-
-const Item = styled(Paper)(({ theme }) => ({
-  //backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  backgroundColor: "none",
-  border: "unset",
-  boxShadow: "unset",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-  borderRadius: 999,
-}));
 
 const phoneKeys = [
   { id: 1, value: 1, label: 1 },
@@ -40,13 +18,7 @@ const phoneKeys = [
   { id: 12, value: "#", label: "#" },
 ];
 
-const Keypad = ({
-  setDialerData,
-  dialerData,
-  userIpAddress,
-  userPassword,
-  showSnackbar,
-}) => {
+const Keypad = ({ setDialerData, userIpAddress, userPassword }) => {
   const dialerConcat = (e) => {
     setDialerData((prev) => (prev += e.target.value));
     sendDialerKeyPress(e.target.value);
@@ -92,51 +64,20 @@ const Keypad = ({
   };
 
   return (
-    <Grid container spacing={4}>
-      <Grid item xs={12}>
-        <Grid container>
-          <Grid item xs={12} display="flex" justifyContent="center">
-            <TextfieldCti
-              value={dialerData}
-              updateFunction={setDialerData}
-              adornmentEndIcon={
-                dialerData ? (
-                  <IconButton onClick={() => dialerDelete()}>
-                    <BackspaceRoundedIcon color="primary" />
-                  </IconButton>
-                ) : null
-              }
-              adornmentEndPosition="end"
-              adornmentStartPosition="start"
-              id="extensionExtension"
-              readOnly={false}
-              label="Dialer"
-              type="text"
-            />
-          </Grid>
-          {phoneKeys.map((key) => (
-            <Grid item xs={4} key={key.id}>
-              <Item>
-                <Button
-                  value={key.value}
-                  onClick={(e) => dialerConcat(e)}
-                  variant="contained"
-                >
-                  {key.label}
-                </Button>
-              </Item>
-            </Grid>
-          ))}
-          <Grid item xs={12} display="flex" justifyContent="space-around">
-            <Button color="success" variant="contained">
-              <LocalPhoneRoundedIcon />
-            </Button>
-            <Button color="error" variant="contained">
-              <PhoneDisabledRoundedIcon />
-            </Button>
-          </Grid>
+    <Grid container spacing={2}>
+      {phoneKeys.map((key) => (
+        <Grid key={key.id} xs={4} item display="flex" justifyContent="center">
+          <Button
+            value={key.value}
+            onClick={(e) => dialerConcat(e)}
+            color="primary"
+            variant="outlined"
+            sx={{ borderRadius: 999, fontSize: 20 }}
+          >
+            {key.label}
+          </Button>
         </Grid>
-      </Grid>
+      ))}
     </Grid>
   );
 };

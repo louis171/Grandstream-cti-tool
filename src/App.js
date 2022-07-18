@@ -30,32 +30,32 @@ import CloseIcon from "@mui/icons-material/Close";
 const App = () => {
   const [dialerData, setDialerData] = useState("");
 
-  const [userIpAddress, setUserIpAddress] = useState("192.168.5.117");
+  const [userIpAddress, setUserIpAddress] = useState("192.168.5.115");
   const [userPassword, setUserPassword] = useState("D0ughnuts");
   const [userLogin, setUserLogin] = useState(false);
 
   const [userPhoneStatus, setUserPhoneStatus] = useState("");
+  const [userLineStatus, setUserLineStatus] = useState([]);
 
   const [open, setOpen] = useState(false);
-    const [message, setMessage] = useState("I'm a custom snackbar");
-    const [duration, setDuration] = useState(2000);
-    const [severity, setSeverity] = useState(
-      "success"
-    ); /** error | warning | info */
+  const [message, setMessage] = useState("I'm a custom snackbar");
+  const [duration, setDuration] = useState(2000);
+  const [severity, setSeverity] =
+    useState("success"); /** error | warning | info */
 
-    const showMessage = (message, severity = "success", duration = 2000) => {
-      setMessage(message);
-      setSeverity(severity);
-      setDuration(duration);
-      setOpen(true);
-    };
+  const showMessage = (message, severity = "success", duration = 2000) => {
+    setMessage(message);
+    setSeverity(severity);
+    setDuration(duration);
+    setOpen(true);
+  };
 
-    const handleClose = (event, reason) => {
-      if (reason === "clickaway") {
-        return;
-      }
-      setOpen(false);
-    };
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
 
   // Queries phone for status
   useEffect(() => {
@@ -68,11 +68,33 @@ const App = () => {
             { credentials: "omit" }
           )
           .then((res) => {
-            setUserPhoneStatus(res.data.body);
+            if (res.data.response !== "success") {
+              showMessage("Error sending phone status request");
+            } else {
+              setUserPhoneStatus(res.data.body);
+            }
           })
-          .catch((err) => console.log(err));
+          .catch((err) => {
+            console.log(err);
+            showMessage("Error sending api-get_phone_status");
+          });
+        axios
+          .post(
+            `https://${userIpAddress}/cgi-bin/api-get_line_status?passcode=${userPassword}`
+          )
+          .then((res) => {
+            if (res.data.response !== "success") {
+              showMessage("Error sending line status request");
+            } else {
+              setUserLineStatus(res.data.body);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            showMessage("Error sending api-get_line_status");
+          });
       }
-    }, 1000);
+    }, 5000);
     return () => clearInterval(intervalId); //This is important
   }, [userLogin]);
 
@@ -84,6 +106,8 @@ const App = () => {
             path="/"
             element={
               <CallView
+                userLineStatus={userLineStatus}
+                userPhoneStatus={userPhoneStatus}
                 setDialerData={setDialerData}
                 dialerData={dialerData}
                 userPassword={userPassword}
@@ -116,7 +140,6 @@ const App = () => {
           open={open}
           onClose={handleClose}
           TransitionComponent={Slide}
-
         >
           <Alert variant="filled" onClose={handleClose} severity={severity}>
             {message}
