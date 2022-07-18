@@ -35,7 +35,7 @@ const TextfieldCti = ({
       InputProps={{
         readOnly: readOnly,
         startAdornment: (
-          <Tooltip title={tooltipText === undefined ? "" : tooltipText} arrow>
+          <Tooltip sx={{ mr: 1 }} title={tooltipText === undefined ? "" : tooltipText} arrow>
             <InputAdornment
               position={
                 adornmentStartPosition === null

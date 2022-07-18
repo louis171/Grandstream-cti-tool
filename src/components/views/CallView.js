@@ -9,6 +9,9 @@ import Keypad from "../phone/Keypad";
 
 import CallOptions from "../phone/CallOptions";
 
+import { getDelayTime } from "../functions/functions";
+import { sendSoftkey } from "../functions/axios/AxiosFunctions";
+
 const CallView = ({
   userLineStatus,
   userPhoneStatus,
@@ -18,81 +21,42 @@ const CallView = ({
   userIpAddress,
   showSnackbar,
 }) => {
-  const dialerConcat = (e) => {
-    setDialerData((prev) => (prev += e.target.value));
-    sendDialerKeyPress(e.target.value);
-  };
-
   const dialerDelete = (e) => {
     setDialerData((prev) => prev.slice(0, -1));
-    sendDialerDeletePress();
-  };
-
-  const sendDialerKeyPress = (lastKey) => {
-    axios
-      .post(
-        `https://${userIpAddress}/cgi-bin/api-send_key?passcode=${userPassword}&keys=${lastKey}`,
-        { credentials: "omit" }
-      )
-      .then((res) => {
-        if (res.data.response !== "success") {
-          showSnackbar("Error sending request");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        showSnackbar("Axios post error. sendDialerKeyPress");
-      });
-  };
-
-  const sendDialerDeletePress = () => {
-    axios
-      .post(
-        `https://${userIpAddress}/cgi-bin/api-send_key?passcode=${userPassword}&keys=SOFT3`,
-        { credentials: "omit" }
-      )
-      .then((res) => {
-        if (res.data.response !== "success") {
-          showSnackbar("Error sending request");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        showSnackbar("Axios post error. sendDialerDeletePress");
-      });
   };
 
   const sendSoftkeyOne = () => {
-    axios
-      .post(
-        `https://${userIpAddress}/cgi-bin/api-send_key?passcode=${userPassword}&keys=SOFT1`,
-        { credentials: "omit" }
-      )
-      .then((res) => {
-        if (res.data.response !== "success") {
-          showSnackbar("Error sending request");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        showSnackbar("Axios post error. sendSoftkeyOne");
-      });
+    sendSoftkey(userIpAddress, userPassword, "SOFT1", showSnackbar);
   };
 
   const sendSoftkeyTwo = () => {
+    sendSoftkey(userIpAddress, userPassword, "SOFT2", showSnackbar);
+  };
+
+  const sendSoftkeyThree = () => {
+    sendSoftkey(userIpAddress, userPassword, "SOFT3", showSnackbar);
+  };
+
+  const sendDialerData = () => {
     axios
       .post(
-        `https://${userIpAddress}/cgi-bin/api-send_key?passcode=${userPassword}&keys=SOFT2`,
+        `https://${userIpAddress}/cgi-bin/api-send_key?passcode=${userPassword}&keys=${dialerData
+          .replace(/(.)/g, "$1:")
+          .slice(0, -1)}`,
         { credentials: "omit" }
       )
       .then((res) => {
         if (res.data.response !== "success") {
           showSnackbar("Error sending request");
+        } else {
+          setTimeout(() => {
+            sendCallStart();
+          }, getDelayTime(dialerData));
         }
       })
       .catch((err) => {
         console.log(err);
-        showSnackbar("Axios post error. sendSoftkeyTwo");
+        showSnackbar(`Axios post error. sendDialerData. ${err.code}`);
       });
   };
 
@@ -109,7 +73,7 @@ const CallView = ({
       })
       .catch((err) => {
         console.log(err);
-        showSnackbar("Axios post error. sendCallStart");
+        showSnackbar(`Axios post error. sendCallStart ${err.code}`);
       });
     setDialerData("");
   };
@@ -142,23 +106,17 @@ const CallView = ({
       </Grid>
       <Grid item xs={12}>
         <Softkeys
-          userLineStatus={userLineStatus}
-          userPhoneStatus={userPhoneStatus}
-          dialerData={dialerData}
-          dialerDelete={dialerDelete}
           sendSoftkeyOne={sendSoftkeyOne}
           sendSoftkeyTwo={sendSoftkeyTwo}
+          sendSoftkeyThree={sendSoftkeyThree}
+          sendSoftkey={sendSoftkey}
         />
       </Grid>
       <Grid item xs={12}>
-        <Keypad
-          setDialerData={setDialerData}
-          userIpAddress={userIpAddress}
-          userPassword={userPassword}
-        />
+        <Keypad setDialerData={setDialerData} />
       </Grid>
       <Grid item xs={12}>
-        <CallOptions sendCallStart={sendCallStart} sendCallEnd={sendCallEnd} />
+        <CallOptions sendCallStart={sendDialerData} sendCallEnd={sendCallEnd} />
       </Grid>
     </Grid>
   );

@@ -1,4 +1,4 @@
-const { app, BrowserWindow, protocol } = require("electron");
+const { app, BrowserWindow, protocol, ipcMain } = require("electron");
 const path = require("path");
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -10,8 +10,9 @@ if (require("electron-squirrel-startup")) {
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 400,
-    height: 750,
+    frame: false,
+    width: 300,
+    height: 600,
     resizable: false,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
@@ -28,7 +29,22 @@ const createWindow = () => {
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools({ mode: "detach" });
+  // mainWindow.webContents.openDevTools({ mode: "detach" });
+
+  // Closes app
+  ipcMain.on("app-close", () => {
+    mainWindow.close();
+  });
+
+  // Minimize app
+  ipcMain.on("app-minimize", () => {
+    mainWindow.minimize();
+  });
+
+  // Minimize app
+  ipcMain.on("app-reload", () => {
+    mainWindow.reload();
+  });
 };
 
 protocol.registerSchemesAsPrivileged([

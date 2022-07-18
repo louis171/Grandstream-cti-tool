@@ -2,12 +2,17 @@ import React from "react";
 import Container from "@mui/material/Container";
 import FooterMenu from "./FooterMenu";
 import Header from "./Header";
+import TitleBar from "./TitleBar";
 
-const Layout = ({ children, userPhoneStatus }) => {
+const Layout = ({ children, userPhoneStatus, userLineStatus }) => {
   return (
     <>
+      <TitleBar />
       <Container component="header" maxWidth="sm">
-        <Header userPhoneStatus={userPhoneStatus} />
+        <Header
+          userPhoneStatus={userPhoneStatus}
+          userLineStatus={userLineStatus}
+        />
       </Container>
       <Container component="main" maxWidth="sm">
         {children}

@@ -18,53 +18,13 @@ const phoneKeys = [
   { id: 12, value: "#", label: "#" },
 ];
 
-const Keypad = ({ setDialerData, userIpAddress, userPassword }) => {
+const Keypad = ({ setDialerData }) => {
   const dialerConcat = (e) => {
     setDialerData((prev) => (prev += e.target.value));
-    sendDialerKeyPress(e.target.value);
-  };
-
-  const dialerDelete = (e) => {
-    setDialerData((prev) => prev.slice(0, -1));
-    sendDialerDeletePress();
-  };
-
-  const sendDialerKeyPress = (lastKey) => {
-    axios
-      .post(
-        `https://${userIpAddress}/cgi-bin/api-send_key?passcode=${userPassword}&keys=${lastKey}`,
-        { credentials: "omit" }
-      )
-      .then((res) => {
-        if (res.data.response !== "success") {
-          showSnackbar("Error sending request");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        showSnackbar("Axios post error. sendDialerKeyPress");
-      });
-  };
-
-  const sendDialerDeletePress = () => {
-    axios
-      .post(
-        `https://${userIpAddress}/cgi-bin/api-send_key?passcode=${userPassword}&keys=SOFT3`,
-        { credentials: "omit" }
-      )
-      .then((res) => {
-        if (res.data.response !== "success") {
-          showSnackbar("Error sending request");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        showSnackbar("Axios post error. sendDialerDeletePress");
-      });
   };
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={1}>
       {phoneKeys.map((key) => (
         <Grid key={key.id} xs={4} item display="flex" justifyContent="center">
           <Button
