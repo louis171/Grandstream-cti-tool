@@ -1,14 +1,14 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
 
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import Layout from "./components/layout/Layout";
+import LayoutNoNav from "./components/layout/LayoutNoNav";
 
 import CallView from "./components/views/CallView";
 import SettingsView from "./components/views/SettingsView";
-import axios from "axios";
 
 import Snackbar from "@mui/material/Snackbar";
 import Slide from "@mui/material/Slide";
@@ -17,7 +17,8 @@ import Alert from "@mui/material/Alert";
 import {
   getPhoneStatus,
   getLineStatus,
-} from "./components/functions/axios/AxiosFunctions";
+} from "./components/functions/axios/GetStatus";
+import VersionView from "./components/views/VersionView";
 
 const App = () => {
   const [colorMode, setColorMode] = useState("light");
@@ -85,12 +86,16 @@ const App = () => {
   return (
     <HashRouter>
       <ThemeProvider theme={darkTheme}>
-        <Layout
-          userPhoneStatus={userPhoneStatus}
-          userLineStatus={userLineStatus}
-        >
-          <CssBaseline />
-          <Routes>
+        <CssBaseline />
+        <Routes>
+          <Route
+            element={
+              <Layout
+                userPhoneStatus={userPhoneStatus}
+                userLineStatus={userLineStatus}
+              />
+            }
+          >
             <Route
               path="/"
               element={
@@ -120,22 +125,25 @@ const App = () => {
                 />
               }
             />
-          </Routes>
-          <Snackbar
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "center",
-            }}
-            autoHideDuration={duration}
-            open={open}
-            onClose={handleClose}
-            TransitionComponent={Slide}
-          >
-            <Alert variant="filled" onClose={handleClose} severity={severity}>
-              {message}
-            </Alert>
-          </Snackbar>
-        </Layout>
+          </Route>
+          <Route element={<LayoutNoNav />}>
+            <Route path="/version" element={<VersionView />} />
+          </Route>
+        </Routes>
+        <Snackbar
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "center",
+          }}
+          autoHideDuration={duration}
+          open={open}
+          onClose={handleClose}
+          TransitionComponent={Slide}
+        >
+          <Alert variant="filled" onClose={handleClose} severity={severity}>
+            {message}
+          </Alert>
+        </Snackbar>
       </ThemeProvider>
     </HashRouter>
   );

@@ -3,8 +3,9 @@ import Container from "@mui/material/Container";
 import FooterMenu from "./FooterMenu";
 import Header from "./Header";
 import TitleBar from "./TitleBar";
+import { Outlet } from "react-router";
 
-const Layout = ({ children, userPhoneStatus, userLineStatus }) => {
+const Layout = ({ userPhoneStatus, userLineStatus }) => {
   return (
     <>
       <TitleBar />
@@ -15,7 +16,7 @@ const Layout = ({ children, userPhoneStatus, userLineStatus }) => {
         />
       </Container>
       <Container component="main" maxWidth="sm">
-        {children}
+        <Outlet />
       </Container>
       <Container component="footer" maxWidth="sm">
         <FooterMenu />

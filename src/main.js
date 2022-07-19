@@ -1,5 +1,12 @@
-const { app, BrowserWindow, protocol, ipcMain } = require("electron");
+const {
+  app,
+  BrowserWindow,
+  protocol,
+  ipcMain,
+  clipboard,
+} = require("electron");
 const path = require("path");
+const { versions } = require("node:process");
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 // eslint-disable-next-line global-require
@@ -29,7 +36,7 @@ const createWindow = () => {
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools({ mode: "detach" });
+  mainWindow.webContents.openDevTools({ mode: "detach" });
 
   // Closes app
   ipcMain.on("app-close", () => {
@@ -44,6 +51,16 @@ const createWindow = () => {
   // Minimize app
   ipcMain.on("app-reload", () => {
     mainWindow.reload();
+  });
+
+  // Open dev tools
+  ipcMain.on("app-dev", () => {
+    mainWindow.webContents.openDevTools({ mode: "undocked" });
+  });
+
+  // Returns version info
+  ipcMain.handle("app-version", async (event, arg) => {
+    return versions;
   });
 };
 

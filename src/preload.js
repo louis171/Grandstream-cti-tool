@@ -13,5 +13,9 @@ contextBridge.exposeInMainWorld("electron", {
     reload() {
       ipcRenderer.send("app-reload");
     },
+    devTools() {
+      ipcRenderer.send("app-dev");
+    },
+    version: (arg) => ipcRenderer.invoke("app-version", arg),
   },
 });

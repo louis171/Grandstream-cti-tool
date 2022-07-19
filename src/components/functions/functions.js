@@ -26,3 +26,25 @@ export const validateIPaddress = (ipaddress) => {
   }
   return true;
 };
+
+// Simple GUID generator
+// e.g. 9e0b2d5d-741f-7271-9faf-ab70edae24bd
+export const guidGenerator = () => {
+  var S4 = function () {
+    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+  };
+  return (
+    S4() +
+    S4() +
+    "-" +
+    S4() +
+    "-" +
+    S4() +
+    "-" +
+    S4() +
+    "-" +
+    S4() +
+    S4() +
+    S4()
+  );
+};
