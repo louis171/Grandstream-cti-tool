@@ -1,5 +1,5 @@
 
-# Grandstream CTI Tool 0.1.0
+# Grandstream CTI Tool 1.0.0
 
 
 The Grandstream CTI Tool is a desktop app solution to communicate with Grandstream GXP and GRP IP Handsets using the CTI (Computer-Telephony Integration) API.

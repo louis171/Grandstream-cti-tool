@@ -1,5 +1,12 @@
-const { app, BrowserWindow, protocol } = require("electron");
+const {
+  app,
+  BrowserWindow,
+  protocol,
+  ipcMain,
+  clipboard,
+} = require("electron");
 const path = require("path");
+const { versions } = require("node:process");
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 // eslint-disable-next-line global-require
@@ -10,8 +17,9 @@ if (require("electron-squirrel-startup")) {
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 400,
-    height: 750,
+    frame: false,
+    width: 300,
+    height: 600,
     resizable: false,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
@@ -29,6 +37,31 @@ const createWindow = () => {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools({ mode: "detach" });
+
+  // Closes app
+  ipcMain.on("app-close", () => {
+    mainWindow.close();
+  });
+
+  // Minimize app
+  ipcMain.on("app-minimize", () => {
+    mainWindow.minimize();
+  });
+
+  // Minimize app
+  ipcMain.on("app-reload", () => {
+    mainWindow.reload();
+  });
+
+  // Open dev tools
+  ipcMain.on("app-dev", () => {
+    mainWindow.webContents.openDevTools({ mode: "undocked" });
+  });
+
+  // Returns version info
+  ipcMain.handle("app-version", async (event, arg) => {
+    return versions;
+  });
 };
 
 protocol.registerSchemesAsPrivileged([

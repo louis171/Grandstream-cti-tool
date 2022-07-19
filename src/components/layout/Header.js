@@ -10,18 +10,37 @@ import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
 
 import { toTitleCase } from "../functions/functions";
 
-const Header = ({ userPhoneStatus }) => {
+const Header = ({ userPhoneStatus, userLineStatus }) => {
   return (
     <Grid container spacing={0} sx={{ mb: 2 }}>
       <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-        <Box display="flex" justifyContent="center" alignItems="center">
+        <Box display="flex" justifyContent="space-evenly" alignItems="center">
           <Box display="flex" justifyContent="center" alignItems="center">
             <Typography variant="body1" sx={{ pr: 1 }}>
-              {userPhoneStatus === "" ? "Unknown" : toTitleCase(userPhoneStatus)}
+              {userPhoneStatus === ""
+                ? "Unknown"
+                : toTitleCase(userPhoneStatus)}
             </Typography>
             <CircleRoundedIcon
               fontSize="small"
               color={userPhoneStatus == "available" ? "success" : "error"}
+            />
+          </Box>
+          <Box display="flex" justifyContent="center" alignItems="center">
+            <Typography variant="body1" sx={{ pr: 1 }}>
+              Line 1
+            </Typography>
+            <CircleRoundedIcon
+              fontSize="small"
+              color={
+                userLineStatus.state == "idle"
+                  ? "success"
+                  : userLineStatus.state == "unknown"
+                  ? "warning"
+                  : userLineStatus == "calling"
+                  ? "primary"
+                  : "error"
+              }
             />
           </Box>
         </Box>

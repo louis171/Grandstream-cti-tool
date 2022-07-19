@@ -7,7 +7,7 @@ import PhoneDisabledRoundedIcon from "@mui/icons-material/PhoneDisabledRounded";
 
 const CallOptions = ({ sendCallStart, sendCallEnd }) => {
   return (
-    <Grid display="flex" justifyContent="center" container spacing={1}>
+    <Grid display="flex" justifyContent="space-evenly" container spacing={1}>
       <Grid item xs={4} display="flex" justifyContent="center">
         <Button
           onClick={() => sendCallStart()}

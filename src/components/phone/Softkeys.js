@@ -2,17 +2,10 @@ import React from "react";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 
-import LocalPhoneRoundedIcon from "@mui/icons-material/LocalPhoneRounded";
-import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
-import BackspaceRoundedIcon from "@mui/icons-material/BackspaceRounded";
-
 const Softkeys = ({
-  userLineStatus,
-  userPhoneStatus,
-  dialerData,
-  dialerDelete,
   sendSoftkeyOne,
   sendSoftkeyTwo,
+  sendSoftkeyThree
 }) => {
   return (
     <Grid display="flex" justifyContent="center" container spacing={1}>
@@ -23,7 +16,7 @@ const Softkeys = ({
           color="error"
           onClick={() => sendSoftkeyOne()}
         >
-          Softkey 1
+          S1
         </Button>
       </Grid>
       <Grid item xs={4} display="flex" justifyContent="center">
@@ -33,7 +26,7 @@ const Softkeys = ({
           color="success"
           onClick={() => sendSoftkeyTwo()}
         >
-          Softkey 2
+          S2
         </Button>
       </Grid>
       <Grid item xs={4} display="flex" justifyContent="center">
@@ -41,9 +34,9 @@ const Softkeys = ({
           size="small"
           variant="outlined"
           color="secondary"
-          onClick={() => dialerDelete()}
+          onClick={() => sendSoftkeyThree()}
         >
-          Softkey 3
+          S3
         </Button>
       </Grid>
     </Grid>

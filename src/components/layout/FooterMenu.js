@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import Link from "@mui/material/Link";
 
 import { Link as RouterLink } from "react-router-dom";
 
 import CallRoundedIcon from "@mui/icons-material/CallRounded";
-import HistoryRoundedIcon from "@mui/icons-material/HistoryRounded";
 import SettingsApplicationsRoundedIcon from "@mui/icons-material/SettingsApplicationsRounded";
 
 const FooterMenu = () => {
