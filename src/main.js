@@ -60,6 +60,8 @@ const createWindow = () => {
 
   // Returns version info
   ipcMain.handle("app-version", async (event, arg) => {
+    app.getVersion();
+    getelectr
     return versions;
   });
 };

@@ -49,29 +49,33 @@ const TitleBar = () => {
           {
             id: 0,
             content:
-              "The Grandstream CTI Tool is designed to work with GXP and GRP series Grandstream IP Handsets.",
+              "The Grandstream CTI Tool is compatible with GXP and GRP series Grandstream IP Handsets.",
             br: 1,
           },
           {
             id: 1,
             content: "Network -> Remote Control",
             sx: { fontWeight: "bold" },
+            variant: "body2",
           },
           {
             id: 2,
             content:
               "Please enable 'Action URI Support' and 'Remote Control Pop up Window Support' in the handsets web interface. Using 'Action URI Allowed IP List' please whitelist IP address of the PC you will be running the app on.",
             br: 1,
+            variant: "body2",
           },
           {
             id: 3,
             content: "Settings -> Call Features",
             sx: { fontWeight: "bold" },
+            variant: "body2",
           },
           {
             id: 4,
             content:
               "Please enable “Click-To-Dial Feature” to allow the app to initialise calls.",
+            variant: "body2",
           },
         ]}
         buttonText="Close"

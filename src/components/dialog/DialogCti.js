@@ -28,7 +28,11 @@ const DialogCti = ({
       <DialogContent>
         {body.map((item) => (
           <React.Fragment key={guidGenerator()}>
-            <DialogContentText sx={item.sx} key={item.id}>
+            <DialogContentText
+              variant={item.variant}
+              sx={item.sx}
+              key={item.id}
+            >
               {item.content}
             </DialogContentText>
             {item.br === 1 ? <br key={guidGenerator()} /> : null}
