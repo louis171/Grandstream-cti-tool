@@ -18,4 +18,14 @@ contextBridge.exposeInMainWorld("electron", {
     },
     version: (arg) => ipcRenderer.invoke("app-version", arg),
   },
+  // Channels for error logging from renderer
+  log: {
+    silly: (arg) => ipcRenderer.invoke("log-silly", arg),
+    debug: (arg) => ipcRenderer.invoke("log-debug", arg),
+    verbose: (arg) => ipcRenderer.invoke("log-verbose", arg),
+    info: (arg) => ipcRenderer.invoke("log-info", arg),
+    warn: (arg) => ipcRenderer.invoke("log-warn", arg),
+    error: (arg) => ipcRenderer.invoke("log-error", arg),
+    getPath: (arg) => ipcRenderer.invoke("log-path", arg),
+  },
 });

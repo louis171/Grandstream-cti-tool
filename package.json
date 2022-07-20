@@ -95,6 +95,7 @@
     "@mui/material": "^5.8.7",
     "@mui/styled-engine-sc": "^5.8.0",
     "axios": "^0.27.2",
+    "electron-log": "^4.4.8",
     "electron-squirrel-startup": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

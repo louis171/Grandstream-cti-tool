@@ -9,6 +9,7 @@ import LayoutNoNav from "./components/layout/LayoutNoNav";
 
 import CallView from "./components/views/CallView";
 import SettingsView from "./components/views/SettingsView";
+import VersionView from "./components/views/VersionView";
 
 import Snackbar from "@mui/material/Snackbar";
 import Slide from "@mui/material/Slide";
@@ -18,7 +19,6 @@ import {
   getPhoneStatus,
   getLineStatus,
 } from "./components/functions/axios/GetStatus";
-import VersionView from "./components/views/VersionView";
 
 const App = () => {
   const [colorMode, setColorMode] = useState("light");

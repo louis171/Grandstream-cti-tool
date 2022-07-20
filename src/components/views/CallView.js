@@ -11,6 +11,7 @@ import CallOptions from "../phone/CallOptions";
 
 import { getDelayTime } from "../functions/functions";
 import { sendSoftkey } from "../functions/axios/AxiosFunctions";
+import { logError } from "../functions/errorHandler/errorHandler";
 
 const CallView = ({
   userLineStatus,
@@ -48,6 +49,12 @@ const CallView = ({
       .then((res) => {
         if (res.data.response !== "success") {
           showSnackbar("Error sending request");
+          logError(4, {
+            err: "Error sending dialer data",
+            resData: res.data,
+            req: res.request.responseURL,
+            status: `${res.status} ${res.statusText}`,
+          });
         } else {
           setTimeout(() => {
             sendCallStart();
@@ -57,6 +64,14 @@ const CallView = ({
       .catch((err) => {
         console.log(err);
         showSnackbar(`Axios post error. sendDialerData. ${err.code}`);
+        logError(5, {
+          err: "sendDialerData",
+          name: err.name,
+          message: err.message,
+          code: err.code,
+          req: err.request.responseURL,
+          status: `${err.request.status} ${err.request.statusText}`,
+        });
       });
   };
 
@@ -69,11 +84,25 @@ const CallView = ({
       .then((res) => {
         if (res.data.response !== "success") {
           showSnackbar("Error sending request");
+          logError(4, {
+            err: "Error sending call start",
+            resData: res.data,
+            req: res.request.responseURL,
+            status: `${res.status} ${res.statusText}`,
+          });
         }
       })
       .catch((err) => {
         console.log(err);
         showSnackbar(`Axios post error. sendCallStart ${err.code}`);
+        logError(5, {
+          err: "sendCallStart",
+          name: err.name,
+          message: err.message,
+          code: err.code,
+          req: err.request.responseURL,
+          status: `${err.request.status} ${err.request.statusText}`,
+        });
       });
     setDialerData("");
   };
@@ -87,11 +116,25 @@ const CallView = ({
       .then((res) => {
         if (res.data.response !== "success") {
           showSnackbar("Error sending request");
+          logError(4, {
+            err: "Error sending call end",
+            resData: res.data,
+            req: res.request.responseURL,
+            status: `${res.status} ${res.statusText}`,
+          });
         }
       })
       .catch((err) => {
         console.log(err);
         showSnackbar("Axios post error. sendCallEnd");
+        logError(5, {
+          err: "sendCallEnd",
+          name: err.name,
+          message: err.message,
+          code: err.code,
+          req: err.request.responseURL,
+          status: `${err.request.status} ${err.request.statusText}`,
+        });
       });
   };
 

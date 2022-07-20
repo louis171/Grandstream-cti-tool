@@ -7,6 +7,15 @@ const {
 } = require("electron");
 const path = require("path");
 const { versions } = require("node:process");
+const {
+  sillyLogger,
+  debugLogger,
+  verboseLogger,
+  infoLogger,
+  warnLogger,
+  errorLogger,
+  getFilePath,
+} = require("./logging");
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 // eslint-disable-next-line global-require
@@ -60,9 +69,36 @@ const createWindow = () => {
 
   // Returns version info
   ipcMain.handle("app-version", async (event, arg) => {
-    app.getVersion();
-    getelectr
     return versions;
+  });
+
+  // Handling error in rendered. Writes to file using electron-log
+  ipcMain.handle("log-silly", (_, arg) => {
+    sillyLogger(arg);
+    return { status: "success", message: "Error logged", severity: "silly" };
+  });
+  ipcMain.handle("log-debug", (_, arg) => {
+    debugLogger(arg);
+    return { status: "success", message: "Error logged", severity: "debug" };
+  });
+  ipcMain.handle("log-verbose", (_, arg) => {
+    verboseLogger(arg);
+    return { status: "success", message: "Error logged", severity: "verbose" };
+  });
+  ipcMain.handle("log-info", (_, arg) => {
+    infoLogger(arg);
+    return { status: "success", message: "Error logged", severity: "info" };
+  });
+  ipcMain.handle("log-warn", (_, arg) => {
+    warnLogger(arg);
+    return { status: "success", message: "Error logged", severity: "warn" };
+  });
+  ipcMain.handle("log-error", (_, arg) => {
+    errorLogger(arg);
+    return { status: "success", message: "Error logged", severity: "error" };
+  });
+  ipcMain.handle("log-path", (_, arg) => {
+    return getFilePath();
   });
 };
 

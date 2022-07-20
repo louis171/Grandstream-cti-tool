@@ -1,4 +1,5 @@
 import axios from "axios";
+import { logError } from "../errorHandler/errorHandler";
 
 export const sendSoftkey = (
   userIpAddress,
@@ -14,11 +15,24 @@ export const sendSoftkey = (
     .then((res) => {
       if (res.data.response !== "success") {
         showSnackbar("Error sending request");
+        logError(4, {
+          err: "Error sending softkey",
+          resData: res.data,
+          req: res.request.responseURL,
+          status: `${res.status} ${res.statusText}`,
+        });
       }
     })
     .catch((err) => {
-      console.log(err);
       showSnackbar("Axios post error. sendSoftkeyOne");
+      logError(5, {
+        err: "sendSoftkey",
+        name: err.name,
+        message: err.message,
+        code: err.code,
+        req: err.request.responseURL,
+        status: `${err.request.status} ${err.request.statusText}`,
+      });
     });
 };
 
@@ -38,6 +52,12 @@ export const sendDialerData = (
     .then((res) => {
       if (res.data.response !== "success") {
         showSnackbar("Error sending request");
+        logError(4, {
+          err: "Error sending dialer data",
+          resData: res.data,
+          req: res.request.responseURL,
+          status: `${res.status} ${res.statusText}`,
+        });
       } else {
         setTimeout(() => {
           sendCallStart();
@@ -47,6 +67,14 @@ export const sendDialerData = (
     .catch((err) => {
       console.log(err);
       showSnackbar(`Axios post error. sendDialerData. ${err.code}`);
+      logError(5, {
+        err: "sendDialerData",
+        name: err.name,
+        message: err.message,
+        code: err.code,
+        req: err.request.responseURL,
+        status: `${err.request.status} ${err.request.statusText}`,
+      });
     });
 };
 
@@ -64,11 +92,25 @@ export const sendCallStart = (
     .then((res) => {
       if (res.data.response !== "success") {
         showSnackbar("Error sending request");
+        logError(4, {
+          err: "Error sending call start",
+          resData: res.data,
+          req: res.request.responseURL,
+          status: `${res.status} ${res.statusText}`,
+        });
       }
     })
     .catch((err) => {
       console.log(err);
       showSnackbar(`Axios post error. sendCallStart ${err.code}`);
+      logError(5, {
+        err: "sendCallStart",
+        name: err.name,
+        message: err.message,
+        code: err.code,
+        req: err.request.responseURL,
+        status: `${err.request.status} ${err.request.statusText}`,
+      });
     });
   setDialerData("");
 };
@@ -82,10 +124,24 @@ export const sendCallEnd = (userIpAddress, userPassword, showSnackbar) => {
     .then((res) => {
       if (res.data.response !== "success") {
         showSnackbar("Error sending request");
+        logError(4, {
+          err: "Error sending call end",
+          resData: res.data,
+          req: res.request.responseURL,
+          status: `${res.status} ${res.statusText}`,
+        });
       }
     })
     .catch((err) => {
       console.log(err);
       showSnackbar("Axios post error. sendCallEnd");
+      logError(5, {
+        err: "sendCallEnd",
+        name: err.name,
+        message: err.message,
+        code: err.code,
+        req: err.request.responseURL,
+        status: `${err.request.status} ${err.request.statusText}`,
+      });
     });
 };
