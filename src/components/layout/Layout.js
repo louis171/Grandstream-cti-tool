@@ -5,10 +5,15 @@ import Header from "./Header";
 import TitleBar from "./TitleBar";
 import { Outlet } from "react-router";
 
-const Layout = ({ userPhoneStatus, userLineStatus }) => {
+const Layout = ({
+  userPhoneStatus,
+  userLineStatus,
+  colorMode,
+  saveColorMode,
+}) => {
   return (
     <>
-      <TitleBar />
+      <TitleBar colorMode={colorMode} saveColorMode={saveColorMode} />
       <Container component="header" maxWidth="sm">
         <Header
           userPhoneStatus={userPhoneStatus}

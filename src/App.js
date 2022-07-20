@@ -93,6 +93,8 @@ const App = () => {
               <Layout
                 userPhoneStatus={userPhoneStatus}
                 userLineStatus={userLineStatus}
+                saveColorMode={saveColorMode}
+                colorMode={colorMode}
               />
             }
           >
@@ -100,8 +102,6 @@ const App = () => {
               path="/"
               element={
                 <CallView
-                  userLineStatus={userLineStatus}
-                  userPhoneStatus={userPhoneStatus}
                   setDialerData={setDialerData}
                   dialerData={dialerData}
                   userPassword={userPassword}
@@ -120,8 +120,6 @@ const App = () => {
                   userPassword={userPassword}
                   setUserLogin={setUserLogin}
                   userLogin={userLogin}
-                  colorMode={colorMode}
-                  saveColorMode={saveColorMode}
                 />
               }
             />

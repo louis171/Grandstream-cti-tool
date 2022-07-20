@@ -24,7 +24,10 @@ import DialogCti from "../dialog/DialogCti";
 
 import { Link as RouterLink } from "react-router-dom";
 
-const TitleBar = () => {
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+
+const TitleBar = ({ colorMode, saveColorMode }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleMenuClick = (event) => {
@@ -148,6 +151,23 @@ const TitleBar = () => {
                 <HelpRoundedIcon fontSize="small" />
               </ListItemIcon>
               <ListItemText>Help</ListItemText>
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleMenuClose();
+                saveColorMode();
+              }}
+            >
+              <ListItemIcon>
+                {colorMode === "dark" ? (
+                  <Brightness7Icon fontSize="small" />
+                ) : (
+                  <Brightness4Icon fontSize="small" />
+                )}
+              </ListItemIcon>
+              <ListItemText sx={{ textTransform: "capitalize" }}>
+                {colorMode} mode
+              </ListItemText>
             </MenuItem>
             <Divider />
             <MenuItem

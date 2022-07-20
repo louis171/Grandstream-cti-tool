@@ -16,7 +16,7 @@ export const sendSoftkey = (
       if (res.data.response !== "success") {
         showSnackbar("Error sending request");
         logError(4, {
-          err: "Error sending softkey",
+          err: `Error sending softkey${softKey}`,
           resData: res.data,
           req: res.request.responseURL,
           status: `${res.status} ${res.statusText}`,
@@ -24,7 +24,7 @@ export const sendSoftkey = (
       }
     })
     .catch((err) => {
-      showSnackbar("Axios post error. sendSoftkeyOne");
+      showSnackbar(`Axios post error. sendSoftkey${softKey}`);
       logError(5, {
         err: "sendSoftkey",
         name: err.name,
